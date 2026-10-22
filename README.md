@@ -4,7 +4,7 @@
 
 **Power BI custom visual plugins for easier dashboard visual creation**
 
-Made by **angcx_**
+Made by **angelicioux**
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
