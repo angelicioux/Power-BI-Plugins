@@ -1,0 +1,751 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "Values",
+            "name": "values",
+            "kind": "Measure",
+            "description": "One card per measure. Rename the field in this visual (or use Title text) to change the card title."
+        },
+        {
+            "displayName": "Comparison values",
+            "name": "comparison",
+            "kind": "Measure",
+            "description": "Prior year / month / day, target, budget… Each card compares with the measure in the same position by default; choose another per card in Format → Sub value → Compare with."
+        },
+        {
+            "displayName": "Category (one card per item)",
+            "name": "category",
+            "kind": "Grouping",
+            "description": "Optional, e.g. Region – one card per value using the first measure in Values."
+        },
+        {
+            "displayName": "Comparison label (text measure)",
+            "name": "comparisonLabel",
+            "kind": "Measure",
+            "description": "Optional text measure for the sub value label, e.g. driven by a 'Compare to' slicer. Tokens like {year} also work."
+        },
+        {
+            "displayName": "Sub heading (text measure)",
+            "name": "subHeading",
+            "kind": "Measure",
+            "description": "Optional text measure shown under the comparison."
+        },
+        {
+            "displayName": "As-at date",
+            "name": "asAtDate",
+            "kind": "Measure",
+            "description": "Optional, e.g. MAX('Date'[Date]). Fills {year}, {month}, {date} in labels."
+        }
+    ],
+    "objects": {
+        "layout": {
+            "properties": {
+                "arrangement": {
+                    "type": {
+                        "enumeration": [
+                            {
+                                "value": "horizontal",
+                                "displayName": "Horizontal"
+                            },
+                            {
+                                "value": "vertical",
+                                "displayName": "Vertical"
+                            }
+                        ]
+                    }
+                },
+                "fixedSize": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "cardWidth": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "cardHeight": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "columns": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "fitToSpace": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "padding": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "gapH": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "gapV": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "showBorder": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "borderColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "borderWidth": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "borderRadius": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "showBackground": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "background": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "bgTransparency": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "overflow": {
+                    "type": {
+                        "enumeration": [
+                            {
+                                "value": "scroll",
+                                "displayName": "Continuous scroll"
+                            },
+                            {
+                                "value": "paginate",
+                                "displayName": "Paginate"
+                            }
+                        ]
+                    }
+                },
+                "linesPerPage": {
+                    "type": {
+                        "numeric": true
+                    }
+                }
+            }
+        },
+        "cards": {
+            "properties": {
+                "background": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "transparency": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "showBorder": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "borderColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "borderWidth": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "radius": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "shadow": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "accentBar": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "padding": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "alignment": {
+                    "type": {
+                        "formatting": {
+                            "alignment": true
+                        }
+                    }
+                }
+            }
+        },
+        "title": {
+            "properties": {
+                "show": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "text": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "fontFamily": {
+                    "type": {
+                        "formatting": {
+                            "fontFamily": true
+                        }
+                    }
+                },
+                "fontSize": {
+                    "type": {
+                        "formatting": {
+                            "fontSize": true
+                        }
+                    }
+                },
+                "bold": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "italic": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "underline": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "color": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "value": {
+            "properties": {
+                "fontFamily": {
+                    "type": {
+                        "formatting": {
+                            "fontFamily": true
+                        }
+                    }
+                },
+                "fontSize": {
+                    "type": {
+                        "formatting": {
+                            "fontSize": true
+                        }
+                    }
+                },
+                "bold": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "italic": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "underline": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "color": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "displayUnits": {
+                    "type": {
+                        "formatting": {
+                            "labelDisplayUnits": true
+                        }
+                    }
+                },
+                "decimals": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "prefix": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "suffix": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "autoFit": {
+                    "type": {
+                        "bool": true
+                    }
+                }
+            }
+        },
+        "comparison": {
+            "properties": {
+                "show": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "compareWith": {
+                    "type": {
+                        "enumeration": [
+                            {
+                                "value": "auto",
+                                "displayName": "Auto"
+                            },
+                            {
+                                "value": "none",
+                                "displayName": "None"
+                            },
+                            {
+                                "value": "1",
+                                "displayName": "Comparison 1"
+                            },
+                            {
+                                "value": "2",
+                                "displayName": "Comparison 2"
+                            },
+                            {
+                                "value": "3",
+                                "displayName": "Comparison 3"
+                            },
+                            {
+                                "value": "4",
+                                "displayName": "Comparison 4"
+                            },
+                            {
+                                "value": "5",
+                                "displayName": "Comparison 5"
+                            },
+                            {
+                                "value": "6",
+                                "displayName": "Comparison 6"
+                            },
+                            {
+                                "value": "7",
+                                "displayName": "Comparison 7"
+                            },
+                            {
+                                "value": "8",
+                                "displayName": "Comparison 8"
+                            },
+                            {
+                                "value": "9",
+                                "displayName": "Comparison 9"
+                            },
+                            {
+                                "value": "10",
+                                "displayName": "Comparison 10"
+                            },
+                            {
+                                "value": "11",
+                                "displayName": "Comparison 11"
+                            },
+                            {
+                                "value": "12",
+                                "displayName": "Comparison 12"
+                            },
+                            {
+                                "value": "13",
+                                "displayName": "Comparison 13"
+                            },
+                            {
+                                "value": "14",
+                                "displayName": "Comparison 14"
+                            },
+                            {
+                                "value": "15",
+                                "displayName": "Comparison 15"
+                            },
+                            {
+                                "value": "16",
+                                "displayName": "Comparison 16"
+                            },
+                            {
+                                "value": "17",
+                                "displayName": "Comparison 17"
+                            },
+                            {
+                                "value": "18",
+                                "displayName": "Comparison 18"
+                            },
+                            {
+                                "value": "19",
+                                "displayName": "Comparison 19"
+                            },
+                            {
+                                "value": "20",
+                                "displayName": "Comparison 20"
+                            }
+                        ]
+                    }
+                },
+                "label": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "display": {
+                    "type": {
+                        "enumeration": [
+                            {
+                                "value": "both",
+                                "displayName": "Change and %"
+                            },
+                            {
+                                "value": "absolute",
+                                "displayName": "Change only"
+                            },
+                            {
+                                "value": "percent",
+                                "displayName": "% only"
+                            }
+                        ]
+                    }
+                },
+                "showArrow": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "invert": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "upColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "downColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "flatColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "overrideColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "colorLabel": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "labelColor": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "fontFamily": {
+                    "type": {
+                        "formatting": {
+                            "fontFamily": true
+                        }
+                    }
+                },
+                "fontSize": {
+                    "type": {
+                        "formatting": {
+                            "fontSize": true
+                        }
+                    }
+                },
+                "bold": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "italic": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "underline": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "displayUnits": {
+                    "type": {
+                        "formatting": {
+                            "labelDisplayUnits": true
+                        }
+                    }
+                },
+                "decimals": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "percentDecimals": {
+                    "type": {
+                        "numeric": true
+                    }
+                }
+            }
+        },
+        "subHeading": {
+            "properties": {
+                "show": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "text": {
+                    "type": {
+                        "text": true
+                    }
+                },
+                "fontFamily": {
+                    "type": {
+                        "formatting": {
+                            "fontFamily": true
+                        }
+                    }
+                },
+                "fontSize": {
+                    "type": {
+                        "formatting": {
+                            "fontSize": true
+                        }
+                    }
+                },
+                "bold": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "italic": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "underline": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "color": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "interactions": {
+            "properties": {
+                "cardClick": {
+                    "type": {
+                        "enumeration": [
+                            {
+                                "value": "select",
+                                "displayName": "Cross-filter (select)"
+                            },
+                            {
+                                "value": "menu",
+                                "displayName": "Open drill-through menu"
+                            },
+                            {
+                                "value": "none",
+                                "displayName": "Nothing"
+                            }
+                        ]
+                    }
+                },
+                "subValueClick": {
+                    "type": {
+                        "enumeration": [
+                            {
+                                "value": "menu",
+                                "displayName": "Open drill-through menu"
+                            },
+                            {
+                                "value": "select",
+                                "displayName": "Cross-filter (select)"
+                            },
+                            {
+                                "value": "none",
+                                "displayName": "Same as card"
+                            }
+                        ]
+                    }
+                },
+                "hoverEffect": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "showTooltip": {
+                    "type": {
+                        "bool": true
+                    }
+                }
+            }
+        }
+    },
+    "dataViewMappings": [
+        {
+            "conditions": [
+                {
+                    "category": {
+                        "max": 1
+                    },
+                    "asAtDate": {
+                        "max": 1
+                    },
+                    "comparison": {
+                        "max": 20
+                    }
+                }
+            ],
+            "categorical": {
+                "categories": {
+                    "for": {
+                        "in": "category"
+                    },
+                    "dataReductionAlgorithm": {
+                        "top": {
+                            "count": 100
+                        }
+                    }
+                },
+                "values": {
+                    "select": [
+                        {
+                            "bind": {
+                                "to": "values"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "comparison"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "comparisonLabel"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "subHeading"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "asAtDate"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "supportsLandingPage": true,
+    "supportsEmptyDataView": true,
+    "suppressDefaultTitle": false,
+    "tooltips": {
+        "supportedTypes": {
+            "default": true,
+            "canvas": true
+        }
+    },
+    "privileges": [],
+    "supportsKeyboardFocus": true,
+    "supportsMultiVisualSelection": true
+}

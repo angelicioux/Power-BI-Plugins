@@ -1,0 +1,26 @@
+{
+  "visual": {
+    "name": "kpiMultiCard",
+    "displayName": "angcx_ Multicard Plugin",
+    "guid": "kpiMultiCard149A18C2853645CDA9658314D06B8F47",
+    "visualClassName": "Visual",
+    "version": "1.0.3.0",
+    "description": "angcx_ Multicard Plugin \u2013 created by angcx_. Multi-card KPI visual: title, value, period comparison sub value, sub heading, per-card formatting with fx, drill-through.",
+    "supportUrl": "https://learn.microsoft.com/power-bi/developer/visuals/",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "5.11.1",
+  "author": {
+    "name": "angcx_",
+    "email": "nazisanfa@gmail.com"
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": null,
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": null,
+  "stringResources": [],
+  "version": "1.0.3.0"
+}

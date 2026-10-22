@@ -2,7 +2,7 @@
 
 # 🃏 Card Plugins
 
-**Power BI card-type custom visuals by angelicioux**
+**Power BI card-type custom visuals by angcx_**
 
 [← Power BI Plugins home](https://github.com/angelicioux/Power-BI-Plugins)
 

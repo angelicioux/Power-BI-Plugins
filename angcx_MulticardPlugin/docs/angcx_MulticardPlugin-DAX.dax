@@ -1,0 +1,193 @@
+// =====================================================================
+//  angcx_ Multicard Plugin – DAX setup (created by angcx_)
+//  Assumes these already exist in your model:
+//    'Lifecycle Dates' (date table), dim_Customer_Lifecycle, [LC Last Data Date]
+// =====================================================================
+
+
+// ---------------------------------------------------------------------
+// 1. TABLE: Comparison Period   (Modeling > New table)
+//    Do NOT create a relationship to any other table.
+//    Sort [Period] by [Order]: Column tools > Sort by column.
+// ---------------------------------------------------------------------
+Comparison Period =
+DATATABLE (
+    "Period", STRING,
+    "Order", INTEGER,
+    "MonthsBack", INTEGER,
+    "DaysBack", INTEGER,
+    {
+        { "Previous day", 1, 0, 1 },
+        { "Last week",    2, 0, 7 },
+        { "Last month",   3, 1, 0 },
+        { "Last year",    4, 12, 0 }
+    }
+)
+
+
+// ---------------------------------------------------------------------
+// 2. CALCULATED COLUMNS on 'Lifecycle Dates' (for the date dropdown)
+// ---------------------------------------------------------------------
+
+// Label shown in the date slicer. "Latest" always points at the last data date.
+// Then set Column tools > Sort by column = Date.
+Date Label =
+IF (
+    'Lifecycle Dates'[Date] = CALCULATE ( [LC Last Data Date], ALL ( 'Lifecycle Dates' ) ),
+    "Latest",
+    FORMAT ( 'Lifecycle Dates'[Date], "d mmm yyyy" )
+)
+
+// Use as a filter on the slicer (Has Data = TRUE) to hide future dates.
+Has Data =
+'Lifecycle Dates'[Date] <= CALCULATE ( [LC Last Data Date], ALL ( 'Lifecycle Dates' ) )
+
+
+// ---------------------------------------------------------------------
+// 3. MEASURES – dates
+// ---------------------------------------------------------------------
+
+// Current as-at date: last selected date, capped at the last data date.
+// -> visual well: As-at date
+LC As At Date =
+MIN ( MAX ( 'Lifecycle Dates'[Date] ), [LC Last Data Date] )
+
+// As-at date moved back by the period chosen in the "Compare to" dropdown.
+// Month-ends stay month-ends (30 Sep -> 31 Aug).
+LC Compare As At Date =
+VAR CurAsAt = [LC As At Date]
+VAR MonthsBack = SELECTEDVALUE ( 'Comparison Period'[MonthsBack], 12 )
+VAR DaysBack = SELECTEDVALUE ( 'Comparison Period'[DaysBack], 0 )
+RETURN
+    IF (
+        MonthsBack > 0,
+        IF (
+            CurAsAt = EOMONTH ( CurAsAt, 0 ),
+            EOMONTH ( CurAsAt, - MonthsBack ),
+            EDATE ( CurAsAt, - MonthsBack )
+        ),
+        CurAsAt - DaysBack
+    )
+
+
+// ---------------------------------------------------------------------
+// 4. MEASURES – values
+// ---------------------------------------------------------------------
+
+// Current value (same logic as your original measure).
+// -> visual well: Values
+LC Active Customers =
+VAR AsAt = [LC As At Date]
+RETURN
+    IF (
+        MIN ( 'Lifecycle Dates'[Date] ) <= [LC Last Data Date],
+        CALCULATE (
+            COUNTROWS ( dim_Customer_Lifecycle ),
+            dim_Customer_Lifecycle[IsEpisodeStart] = 1,
+            dim_Customer_Lifecycle[EpisodeStartDate] <= AsAt,
+            FILTER (
+                ALL ( dim_Customer_Lifecycle[EpisodeEndDate] ),
+                ISBLANK ( dim_Customer_Lifecycle[EpisodeEndDate] )
+                    || dim_Customer_Lifecycle[EpisodeEndDate] > AsAt
+            ),
+            REMOVEFILTERS ( 'Lifecycle Dates' )
+        )
+    )
+
+// Comparison value that follows the "Compare to" dropdown.
+// -> visual well: Comparison values
+LC Active Customers Compare =
+VAR AsAt = [LC Compare As At Date]
+RETURN
+    IF (
+        MIN ( 'Lifecycle Dates'[Date] ) <= [LC Last Data Date],
+        CALCULATE (
+            COUNTROWS ( dim_Customer_Lifecycle ),
+            dim_Customer_Lifecycle[IsEpisodeStart] = 1,
+            dim_Customer_Lifecycle[EpisodeStartDate] <= AsAt,
+            FILTER (
+                ALL ( dim_Customer_Lifecycle[EpisodeEndDate] ),
+                ISBLANK ( dim_Customer_Lifecycle[EpisodeEndDate] )
+                    || dim_Customer_Lifecycle[EpisodeEndDate] > AsAt
+            ),
+            REMOVEFILTERS ( 'Lifecycle Dates' )
+        )
+    )
+
+// Fixed-period versions (optional). These ignore the dropdown. Use them when
+// a card should always compare with one period (pick via Format > Sub value > Compare with).
+LC Active Customers PY =
+CALCULATE ( [LC Active Customers Compare], 'Comparison Period'[Period] = "Last year" )
+
+LC Active Customers PM =
+CALCULATE ( [LC Active Customers Compare], 'Comparison Period'[Period] = "Last month" )
+
+LC Active Customers PW =
+CALCULATE ( [LC Active Customers Compare], 'Comparison Period'[Period] = "Last week" )
+
+LC Active Customers PD =
+CALCULATE ( [LC Active Customers Compare], 'Comparison Period'[Period] = "Previous day" )
+
+
+// ---------------------------------------------------------------------
+// 5. MEASURES – text for the visual
+// ---------------------------------------------------------------------
+
+// Sub value label that follows the dropdown.
+// -> visual well: Comparison label
+LC Compare Label =
+VAR Prev = [LC Compare As At Date]
+RETURN
+    SWITCH (
+        SELECTEDVALUE ( 'Comparison Period'[Period], "Last year" ),
+        "Previous day", "vs " & FORMAT ( Prev, "d mmm yyyy" ),
+        "Last week",    "vs last week (" & FORMAT ( Prev, "d mmm yyyy" ) & ")",
+        "Last month",   "vs " & FORMAT ( Prev, "mmm yyyy" ),
+        "vs same period " & YEAR ( Prev )
+    )
+
+// Sub heading with the as-at date in it (optional).
+// -> visual well: Sub heading
+LC Sub Heading =
+"Open accounts as at " & FORMAT ( [LC As At Date], "d mmm yyyy" )
+
+
+// ---------------------------------------------------------------------
+// 6. MEASURES – optional extras
+// ---------------------------------------------------------------------
+
+// For the fx "Color override" (Format > Sub value > card > fx > Field value).
+// Green = up, amber = small drop (< 5%), red = bigger drop.
+LC Sub Value Colour =
+VAR Cur = [LC Active Customers]
+VAR Prev = [LC Active Customers Compare]
+VAR Pct = DIVIDE ( Cur - Prev, Prev )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( Prev ), "#7A7A7A",
+        Pct >= 0, "#2E9B4F",
+        Pct > -0.05, "#E8A317",
+        "#D13438"
+    )
+
+// Change and % change (for tooltips, tables or other visuals).
+LC Active Customers Change =
+[LC Active Customers] - [LC Active Customers Compare]
+
+LC Active Customers Change % =
+DIVIDE ( [LC Active Customers Change], [LC Active Customers Compare] )
+
+
+// =====================================================================
+//  Wiring it up
+//  Visual wells:
+//    Values            -> LC Active Customers
+//    Comparison values -> LC Active Customers Compare
+//    Comparison label  -> LC Compare Label
+//    Sub heading       -> LC Sub Heading        (optional)
+//    As-at date        -> LC As At Date
+//  Slicers (Format > Slicer settings > Style = Dropdown, Single select = On):
+//    'Comparison Period'[Period]   – "Compare to"
+//    'Lifecycle Dates'[Date Label] – date (visual-level filter: Has Data = True)
+// =====================================================================

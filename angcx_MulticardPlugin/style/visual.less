@@ -1,0 +1,100 @@
+// angcx_ Multicard Plugin – created by angcx_
+
+.kmc-root {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.kmc-grid {
+    display: grid;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+}
+
+.kmc-nav {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 26px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11px;
+    color: #605E5C;
+    &:empty { display: none; }
+}
+.kmc-nav-btn {
+    border: 1px solid #C8C6C4;
+    background: #FFFFFF;
+    border-radius: 4px;
+    width: 24px;
+    height: 20px;
+    line-height: 16px;
+    cursor: pointer;
+    color: #252423;
+    &:disabled { opacity: 0.35; cursor: default; }
+}
+
+.kmc-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    gap: 4px;
+    min-width: 0;
+    min-height: 0;
+    & > * { flex-shrink: 0; }
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: opacity 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    cursor: default;
+    outline: none;
+
+    &.kmc-hover:hover {
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.16) !important;
+    }
+    &:focus-visible {
+        box-shadow: 0 0 0 2px #118DFF !important;
+    }
+    &.kmc-dim {
+        opacity: 0.4;
+    }
+}
+
+.kmc-title, .kmc-value, .kmc-sub, .kmc-subheading {
+    max-width: 100%;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kmc-title { white-space: nowrap; }
+.kmc-value { white-space: nowrap; letter-spacing: 0.5px; }
+.kmc-sub { white-space: normal; }
+.kmc-subheading { white-space: normal; }
+
+.kmc-clickable {
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover { background: rgba(0, 0, 0, 0.05); }
+}
+
+.kmc-landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: #605E5C;
+    text-align: center;
+    gap: 6px;
+}
+.kmc-landing-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #252423;
+}
