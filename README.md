@@ -25,12 +25,22 @@ This repository is a collection of **Power BI custom visuals** I build to make d
 
 ---
 
-## 🧩 Plugins
+## 🧩 Plugin categories
 
-| Plugin | Description | Version | Docs |
+Each category has its **own branch**. Inside it, every plugin has its own folder, and the branch README summarises them all. Use the branch dropdown at the top of the repo, or the links below.
+
+| Category | Branch | Plugins | Status |
 |---|---|---|---|
-| **[angcx_ Multicard Plugin](./angcx_MulticardPlugin)** | Multi-card KPI visual: title, value, a period-comparison sub value with favourable/unfavourable colours, sub heading, per-card formatting with **fx** conditional formatting, pagination and **drill-through**. | `1.0.3.0` | [README](./angcx_MulticardPlugin/README.md) · [DAX](./angcx_MulticardPlugin/docs) |
-| *More coming soon…* | | | |
+| 🃏 **Card** | [`Card`](https://github.com/angelicioux/Power-BI-Plugins/tree/Card) | KPI and headline-number visuals | ✅ 1 available |
+| 📈 **Graph** | `Graph` | Chart visuals | 🚧 Coming soon |
+| 🗺️ **Maps** | `Maps` | Map visuals | 🚧 Coming soon |
+
+### 🃏 Card plugins
+
+| Plugin | Summary | Version | Docs |
+|---|---|---|---|
+| **[angcx_ Multicard Plugin](https://github.com/angelicioux/Power-BI-Plugins/tree/Card/angcx_MulticardPlugin)** | Shows several KPI cards in one visual, each with a value, a colour-coded comparison against last year, month, week or day, a sub heading, and per-card formatting with drill-through. | `1.0.3.0` | [README](https://github.com/angelicioux/Power-BI-Plugins/blob/Card/angcx_MulticardPlugin/README.md) · [DAX](https://github.com/angelicioux/Power-BI-Plugins/tree/Card/angcx_MulticardPlugin/docs) |
+| angcx_ Colorful Plugin | Coming soon | – | – |
 
 <details>
 <summary><b>angcx_ Multicard Plugin – features</b></summary>
@@ -64,7 +74,8 @@ Requirements: [Node.js](https://nodejs.org) (LTS) and the Power BI visuals tools
 ```bash
 npm install -g powerbi-visuals-tools
 
-git clone https://github.com/angelicioux/Power-BI-Plugins.git
+# clone one category branch, then open the plugin's folder
+git clone -b Card https://github.com/angelicioux/Power-BI-Plugins.git
 cd Power-BI-Plugins/angcx_MulticardPlugin
 
 npm install
@@ -73,20 +84,17 @@ pbiviz package        # creates dist/<name>.pbiviz
 
 ---
 
-## 📁 Repository structure
+## 🌿 Repository structure
 
 ```
-Power-BI-Plugins/
-├── README.md                    ← you are here
-├── angcx_MulticardPlugin/       ← one folder per plugin
-│   ├── src/                     ← TypeScript source (visual.ts, settings.ts)
-│   ├── style/                   ← styles (.less)
-│   ├── assets/                  ← icon
-│   ├── docs/                    ← DAX examples and guides
-│   ├── capabilities.json        ← field wells and format options
-│   ├── pbiviz.json              ← name, version, author
-│   └── README.md                ← plugin documentation
-└── <next plugin>/
+Power-BI-Plugins
+├── main                          ← this overview
+├── Card                          ← card plugins
+│   ├── README.md                 ← summary of every card plugin
+│   ├── angcx_MulticardPlugin/    ← multi-card KPI visual
+│   └── angcx_ColorfulPlugin/     ← coming soon
+├── Graph                         ← coming soon
+└── Maps                          ← coming soon
 ```
 
 ---
@@ -97,7 +105,9 @@ Power-BI-Plugins/
 - [ ] Sparkline / trend inside cards
 - [ ] Progress-to-target bar
 - [ ] Several comparisons per card (e.g. vs last year **and** last month)
-- [ ] More plugins…
+- [ ] angcx_ Colorful Plugin (Card)
+- [ ] Graph plugins
+- [ ] Maps plugins
 
 Have an idea? [Open an issue](https://github.com/angelicioux/Power-BI-Plugins/issues) 💬
 
